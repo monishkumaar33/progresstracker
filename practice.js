@@ -1,8 +1,7 @@
 //track sessions
-sessions = [];
-schedules = [];
+let sessions = [];
+let schedules = [];
 function addSession(session) {
-    console.log("Session added: " + session.name);
     sessions.push(session);
 }
 function removeSession(sessionid) {
@@ -11,36 +10,53 @@ function removeSession(sessionid) {
         if(sesh.id == sessionid)
         {
             sessions.splice(sessions.indexOf(sesh),1);
-            console.log("Session removed: " + sesh.name);
-            return;
+            return true;
         }
     }
-    console.log("Session with id " + sessionid + " not found.");   
+    return false;   
 }
-function createschedule(schedule) {
+function createSchedule(schedule) {
     //code to create schedule
-    console.log("Schedule created for " + schedule.day);
+    
     schedules.push(schedule);
 }
-function editsession(session)
+function removeSchedule(day) {
+    for(sch of schedules)
+    {   
+        if(sch.day == day)
+        {
+            schedules.splice(schedules.indexOf(sch),1);
+            return true;
+        }
+    }
+    return false;
+}
+function editSession(session)
 {
     sessions = sessions.map(s => s.id === session.id ? session : s);
 }
-function editschedule(schedule) {
+function editSchedule(schedule) {
     schedules = schedules.map(s=> s.id==schedule.id?schedule:s);
 }
-function getsessions() {
+function getSessions() {
     return sessions;
 }
-sesh1 = {id: 1, name: "DSA", Duration: "60 mins"};
-sesh2 = {id: 2, name: "React", Duration: "45 mins"};
+function getSchedule()
+{
+    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    let today = new Date();
+    let day = days[today.getDay()];
+   // console.log(day);
+    for(let sch of schedules)
+    {
+        if(sch.day === day)
+        {
+            return sch.sessions;
+        }
+    }
+    return [];
+}
 
-schedule = {day: "Monday", sessions: [sesh1, sesh2]};
-createschedule(schedule);
 
-addSession(sesh1);
-addSession(sesh2);
 
-console.log(getsessions());
-
-module.exports = {addSession, removeSession, createschedule, editsession, editschedule, getsessions};
+module.exports = {addSession, removeSession, createSchedule, removeSchedule, editSession, editSchedule, getSessions, getSchedule};
