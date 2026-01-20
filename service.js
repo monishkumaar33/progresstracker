@@ -1,8 +1,7 @@
 //track sessions
-const pool = require('./db');
+//Service functions for sessions and schedules
 
-sessions = [];
-schedules = [];
+const pool = require('./db');
 
 async function addSession(session) {
     await pool.query("INSERT INTO sessions(title, description , completed) values($1,$2,$3)",
@@ -41,7 +40,6 @@ async function createSchedule(day, sessionsList) {
         client.release();
     }
 }
-
 async function removeSchedule(day) {
     const res = await pool.query("DELETE from schedules where day=$1",[day]);
     return res.rowCount > 0;
@@ -51,10 +49,11 @@ async function editSession(session)
     const res = await pool.query("UPDATE sessions set title=$1, description=$2, completed=$3 where id=$4",
                                     [session.title, session.description, session.completed, session.id]);
 }
-function editSchedule(schedule) {
-    schedules = schedules.map(s=> s.id==schedule.id?schedule:s);
+async function editSchedule(schedule) {
+    const res = await pool.query("UPDATE schedules set day=$1 where id=$2",
+                                    [schedule.day, schedule.id]);
 }
-async function getSessions() {
+async function getSessions(){
     
     const res = await pool.query("SELECT * from sessions");
     return res.rows;
