@@ -1,13 +1,21 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('./controller');
+const scheduleController = require('./controller/schedulecontroller');
+const userController = require('./controller/usercontroller');
 
-router.post('/session', controller.postSession);
-router.get('/sessions', controller.getSession);
-router.post('/schedule', controller.postSchedule);
-router.get('/schedule', controller.getSchedules);
-router.delete('/schedule/:day', controller.deleteSchedule);
-router.delete('/session/:id', controller.deleteSession);
-router.put('/completesession/:id', controller.putSession);
+// User routes
+router.post('/signup', userController.postuser);
+router.post('/login', userController.loginuser);
+
+// Schedule routes
+router.post('/session', scheduleController.postSession);
+router.get('/sessions', scheduleController.getSession);
+router.post('/schedule', scheduleController.postSchedule);
+router.get('/schedule', scheduleController.getSchedules);
+router.delete('/schedule/:day', scheduleController.deleteSchedule);
+router.delete('/session/:id', scheduleController.deleteSession);
+router.put('/completesession/:id', scheduleController.putSession);
+
+
 
 module.exports = router;

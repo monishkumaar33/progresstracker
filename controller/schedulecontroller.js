@@ -1,11 +1,11 @@
-const express = require('express');
+
 const { addSession, 
     getSessions, 
     createSchedule, 
     getSchedule, 
     removeSchedule, 
     removeSession,
-    completeSession } = require('./service');
+    completeSession } = require('../service/scheduleservice');
 
 
 exports.postSession =  async (req, res) => {

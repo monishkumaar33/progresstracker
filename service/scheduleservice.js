@@ -1,7 +1,7 @@
 //track sessions
 //Service functions for sessions and schedules
 
-const pool = require('./db');
+const pool = require('../db');
 
 async function addSession(session) {
     await pool.query("INSERT INTO sessions(title, description , completed) values($1,$2,$3)",

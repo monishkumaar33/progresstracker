@@ -14,6 +14,7 @@ pool.query('SELECT NOW()', (err, res) => {
 });
 
 app.use('/api', require('./routes'));
+app.use('/',require('./routes'));
 
 const server = app.listen(3000, () => {
     console.log(`Server is running on 3000`);
