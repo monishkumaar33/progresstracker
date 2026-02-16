@@ -13,8 +13,9 @@ pool.query('SELECT NOW()', (err, res) => {
     }
 });
 
-app.use('/api', require('./routes'));
-app.use('/',require('./routes'));
+
+app.use('/auth', require('./authroutes'));
+app.use('/signin', require('./routes'));
 
 const server = app.listen(3000, () => {
     console.log(`Server is running on 3000`);

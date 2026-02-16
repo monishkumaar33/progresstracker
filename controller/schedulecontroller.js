@@ -42,9 +42,16 @@ exports.getSchedules = async (req,res)=>
 
 exports.postSchedule = async (req,res)=>
 {
-    const receivedData = req.body;
-    await createSchedule(receivedData);
-    return res.status(201).send("Schedule created.");
+    try {
+        const { day, sessionsList } = req.body;
+        if (!day || !sessionsList) {
+            return res.status(400).send("Day and sessionsList are required.");
+        }
+        await createSchedule(day, sessionsList);
+        return res.status(201).send("Schedule created.");
+    } catch (error) {
+        return res.status(500).send("Error creating schedule: " + error.message);
+    }
 }
 
 exports.deleteSchedule = async (req,res)=>
