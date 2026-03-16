@@ -14,5 +14,6 @@ router.get('/schedule', scheduleController.getSchedules);
 router.delete('/schedule/:day', scheduleController.deleteSchedule);
 router.delete('/session/:id', validateParamId('id'), scheduleController.deleteSession);
 router.put('/completesession/:id', validateParamId('id'), scheduleController.putSession);
+router.get('/sessions/paged', scheduleController.getSessionpaged);
 
 module.exports = router;

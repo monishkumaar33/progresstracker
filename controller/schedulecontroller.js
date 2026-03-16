@@ -81,4 +81,24 @@ exports.putSession = async(req, res) => {
     }
     return res.status(404).send("Session not found");
 }
-
+exports.getSessionpaged = async(req,res)=>
+{
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const offset = (page - 1) * limit;
+    const sessions = await getSessions(offset, limit);
+    if(sessions.length === 0)
+    {
+        return res.status(200).json({message: "No sessions available."});
+    }
+    return res.status(200).json(sessions);
+}
+exports.getSessionfiltered = async(req,res)=>
+{
+    const sessions = await getSessionsfiltered();
+    if(sessions.length === 0)
+    {
+        return res.status(200).json({message: "No sessions available."});
+    }
+    return res.status(200).json(sessions);
+}

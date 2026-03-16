@@ -54,8 +54,11 @@ async function editSchedule(schedule) {
                                     [schedule.day, schedule.id]);
 }
 async function getSessions(){
-    
     const res = await pool.query("SELECT * from sessions");
+    return res.rows;
+}
+async function getSessions(offset, limit) {
+    const res = await pool.query("SELECT * from sessions ORDER BY id LIMIT $1 OFFSET $2", [limit, offset]);
     return res.rows;
 }
 async function getSchedule()
@@ -72,6 +75,10 @@ async function completeSession(sessionid)
     const res = await pool.query("UPDATE sessions set completed=true where id = $1",[sessionid]);
     return res.rowCount > 0;
 }
-
+async function getSessionsfiltered()
+{
+    const res = await pool.query("SELECT * from sessions where completed=false");
+    return res.rows;
+}
 
 module.exports = {addSession, removeSession, createSchedule, removeSchedule, editSession, editSchedule, getSessions, getSchedule,completeSession};
